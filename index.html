@@ -46,6 +46,35 @@
     <div class="box">19</div>
     <div class="box">20</div>
 
-    <script></script>
+    <script>
+      const observer = new IntersectionObserver(callback);
+      const boxes = document.querySelectorAll('.box');
+      boxes.forEach(box => { // boxes 배열 안의 box 아이템을 forEach를 통회 순회
+        observer.observe(box); // observer 인스턴스의 observe 함수를 통해 box를 관찰시키도록 수행시킴 
+      });
+
+      /* 관찰할 때마다 호출하길 원하는 callback 함수 정의 */
+      /* 
+        entries는 IntersectionObserverEntry 인스턴스의 배열이다.
+        Intersection ObserverEntry는 읽기전용(Read only)의 다음 속성들을 포함한다. 
+          1. boudingClientRect : 관찰 대상의 사각형 정보
+          2. intersectionRect : 관찰 대상의 교차한 영역 정보
+          3. intersectionRatio : 관찰 대상의 교차한 영역 백분율 (intersectionRect영역에서 boundingClientRect영역까지)
+          4. isIntersecting : 관찰 대상의 교차 상태 (Boolean)
+          5. rootBounds : 지정한 루트 요소의 사각형 정보
+          6. target : 관찰 대상 요소 (Element)
+          7. time : 변경이 발생한 시간 정보
+      */
+      function callback(entries) { 
+        entries.forEach(entry => {
+
+          if(entry.isIntersecting){
+            entry.target.classList.add('active');
+          } else {
+            entry.target.classList.remove('active');
+          }
+        });
+      }
+    </script>
   </body>
 </html>
